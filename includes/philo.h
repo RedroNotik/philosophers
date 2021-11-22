@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:01:32 by ghanh             #+#    #+#             */
-/*   Updated: 2021/11/21 13:57:51 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/11/22 19:34:36 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,30 @@
 //pthread_mutex_init,pthread_mutex_destroy, pthread_mutex_lock,pthread_mutex_unlock
 # include "libft.h"
 
-typedef struct s_cur_phil
+typedef struct s_phil_c
 {
-	int	eat_counter;
+	pthread_t		tr_phil;
+	int 			number;
+	int				eat_counter;
+	unsigned int	start_eating;
+	int				l_fork;
+	int 			r_fork;
+	unsigned int 	t_t_d;
+	unsigned int	t_t_e;
+	unsigned int	t_t_s;
+	int 			win;
 
-} 			t_cut_phil;
+} 			t_phil_c;
 
 typedef struct s_phil
 {
-	unsigned int	phil_num;
+	size_t			phil_num;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	time_to_think;
 	unsigned int	cur_time;
 	int				nb_meals_to_win;
-
+	t_phil_c		*phil;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 }				t_phil;
