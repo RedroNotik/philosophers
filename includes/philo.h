@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:01:32 by ghanh             #+#    #+#             */
-/*   Updated: 2021/11/22 19:34:36 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/11/23 18:41:41 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,27 @@
 # include <pthread.h> //pthread_create, pthread_detach, pthread_join,
 //pthread_mutex_init,pthread_mutex_destroy, pthread_mutex_lock,pthread_mutex_unlock
 # include "libft.h"
+# define EAT 1
+# define T_FORK 2
+# define SLEEP 3
+# define THINK 4
+# define DIE	5
+
 
 typedef struct s_phil_c
 {
 	pthread_t		tr_phil;
 	int 			number;
 	int				eat_counter;
-	unsigned int	start_eating;
-	int				l_fork;
-	int 			r_fork;
+	uint64_t 		end_eating;
+	pthread_mutex_t *l_fork;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	print;
 	unsigned int 	t_t_d;
 	unsigned int	t_t_e;
 	unsigned int	t_t_s;
 	int 			win;
+	uint64_t 		start_time;
 
 } 			t_phil_c;
 
@@ -49,4 +57,6 @@ typedef struct s_phil
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 }				t_phil;
+
+uint64_t	set_time(int i);
 #endif
