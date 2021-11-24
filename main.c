@@ -54,41 +54,6 @@ int	check_arg(int argc, char *argv[])
 	return (1);
 }
 
-//t_phil	set_info(char *argv[])
-//{
-//	size_t	i;
-//	t_phil *phil_info;
-//
-//	i = 0;
-//	phil_info.phil_num = ft_atoi(argv[1]);
-//	phil_info.time_to_die = ft_atoi(argv[2]);
-//	phil_info.time_to_eat = ft_atoi(argv[3]);
-//	phil_info.time_to_sleep = ft_atoi(argv[4]);
-//	phil_info.forks = malloc(sizeof(pthread_mutex_t) * phil_info.phil_num);
-//	phil_info.phil = malloc(sizeof(t_phil_c) * phil_info.phil_num);
-//	pthread_mutex_init(&phil_info.print, NULL);
-//	//todo check malloc and dont forget to free
-//	while (i < phil_info.phil_num)
-//	{
-//		phil_info.phil[i].number = i + 1;
-//		phil_info.phil[i].l_fork = &phil_info.forks[i];
-//		phil_info.phil[i].r_fork = &phil_info.forks[(i + 1) % phil_info
-//													.phil_num];
-//		phil_info.phil[i].t_t_d = phil_info.time_to_die;
-//		phil_info.phil[i].t_t_e = phil_info.time_to_eat;
-//		phil_info.phil[i].t_t_s = phil_info.time_to_sleep;
-//		phil_info.phil[i].eat_counter = 0;
-//		pthread_mutex_init(&phil_info.forks[i], NULL);
-//		phil_info.phil[i].print = phil_info.print;
-//		if (argv[5])
-//			phil_info.phil[i].win = ft_atoi(argv[5]);
-//		else
-//			phil_info.phil[i].win = -1;
-//		i++;
-//	}
-//	return (phil_info);
-//}
-
 void	set_info(char *argv[], t_phil *phil_info)
 {
 	size_t	i;
@@ -105,9 +70,21 @@ void	set_info(char *argv[], t_phil *phil_info)
 	while (i < phil_info->phil_num)
 	{
 		phil_info->phil[i].number = i + 1;
-		phil_info->phil[i].l_fork = &phil_info->forks[i];
-		phil_info->phil[i].r_fork = &phil_info->forks[(i + 1) % phil_info
-																	   ->phil_num];
+//		phil_info->phil[i].l_fork = &phil_info->forks[i];
+//		phil_info->phil[i].r_fork = &phil_info->forks[(i + 1) % phil_info
+//				->phil_num];
+		if ((i + 1) % 2 == 1)
+		{
+			phil_info->phil[i].l_fork = &phil_info->forks[i];
+			phil_info->phil[i].r_fork = &phil_info->forks[(i + 1) % phil_info
+					->phil_num];
+		}
+		else
+		{
+			phil_info->phil[i].l_fork = &phil_info->forks[(i + 1) % phil_info
+					->phil_num];
+			phil_info->phil[i].r_fork = &phil_info->forks[i];
+		}
 		phil_info->phil[i].t_t_d = phil_info->time_to_die;
 		phil_info->phil[i].t_t_e = phil_info->time_to_eat;
 		phil_info->phil[i].t_t_s = phil_info->time_to_sleep;
@@ -136,22 +113,27 @@ uint64_t	set_time(int i)
 void	eat_ph(t_phil_c	*data)
 {
 	pthread_mutex_lock(data->l_fork);
+//	data->eat_counter++;
 	print_f(data, 2);
 	pthread_mutex_lock(data->r_fork);
 	print_f(data, 2);
-	data->end_eating  = set_time(data->t_t_e);
+	data->end_eating  = set_time(0);
+	data->eat_counter++;
 	print_f(data, 1);
 	c_usleep(data->t_t_e);
-	data->eat_counter++;
+	pthread_mutex_unlock(data->r_fork);
+	pthread_mutex_unlock(data->l_fork);
 }
 
 void	sleep_and_think(t_phil_c *data)
 {
-	pthread_mutex_unlock(data->r_fork);
-	pthread_mutex_unlock(data->l_fork);
 	print_f(data, SLEEP);
 	c_usleep(data->t_t_s);
 	print_f(data, THINK);
+//	if (data->number % 2 == 0)
+//	{
+//		c_usleep(data->t_t_e / 2 );
+//	}
 }
 
 void	*phil_process(void *phil)
@@ -160,7 +142,7 @@ void	*phil_process(void *phil)
 
 	data = phil;
 	if (data->number % 2 == 0)
-		usleep(1000);
+		c_usleep(1);
 	while (1)
 	{
 		eat_ph(data);
