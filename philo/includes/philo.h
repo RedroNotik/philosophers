@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:01:32 by ghanh             #+#    #+#             */
-/*   Updated: 2021/11/23 18:41:41 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/11/28 15:48:29 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <sys/time.h> //gettimeofday
 # include <pthread.h> //pthread_create, pthread_detach, pthread_join,
 //pthread_mutex_init,pthread_mutex_destroy, pthread_mutex_lock,pthread_mutex_unlock
-# include "libft.h"
 # define EAT 1
 # define T_FORK 2
 # define SLEEP 3
@@ -52,11 +51,30 @@ typedef struct s_phil
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	unsigned int	cur_time;
-	int				nb_meals_to_win;
+	int				win;
 	t_phil_c		*phil;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 }				t_phil;
 
+////set_info.c
+void		set_info(char *argv[], t_phil *phil_info);
+
+////main.c
+int			die(t_phil *phil_info);
+int			check_eat(t_phil *phil_info);
+int			start_threads(t_phil *phil_info);
+int			check_arg(int argc, char *argv[]);
+////simulation.c
+void		print_f(t_phil_c *data, int sign);
+void		eat_ph(t_phil_c	*data);
+void		sleep_and_think(t_phil_c *data);
+void		*phil_process(void *phil);
+int			phil_game(t_phil *phil_info);
+////time.c
+void		c_usleep(uint64_t time);
 uint64_t	set_time(int i);
+////utils.c
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
 #endif
