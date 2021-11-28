@@ -1,6 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/28 15:55:00 by ghanh             #+#    #+#             */
+/*   Updated: 2021/11/28 15:55:22 by ghanh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../includes/philo.h"
-
-
 
 int	check_arg(int argc, char *argv[])
 {
@@ -29,8 +38,8 @@ int	check_arg(int argc, char *argv[])
 
 int	start_threads(t_phil *phil_info)
 {
-	size_t	i;
-	uint64_t time;
+	size_t		i;
+	uint64_t	time;
 
 	i = 0;
 	time = set_time(0);
@@ -38,7 +47,7 @@ int	start_threads(t_phil *phil_info)
 	{
 		phil_info->phil[i].start_time = time;
 		pthread_create(&phil_info->phil[i].tr_phil, NULL, phil_process,
-					   &phil_info->phil[i]);
+			&phil_info->phil[i]);
 		i++;
 	}
 	return (0);
@@ -76,8 +85,6 @@ int	die(t_phil *phil_info)
 	pthread_mutex_destroy(&phil_info->print);
 	return (0);
 }
-
-
 
 int	main(int argc, char *argv[])
 {

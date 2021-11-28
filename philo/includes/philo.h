@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:01:32 by ghanh             #+#    #+#             */
-/*   Updated: 2021/11/28 15:48:29 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/11/28 15:49:18 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,29 @@
 # include <stdlib.h> //malloc, free
 # include <unistd.h> //write, usleep
 # include <sys/time.h> //gettimeofday
-# include <pthread.h> //pthread_create, pthread_detach, pthread_join,
-//pthread_mutex_init,pthread_mutex_destroy, pthread_mutex_lock,pthread_mutex_unlock
+# include <pthread.h> //pthread_create, pthread_detach, pthread_join
 # define EAT 1
 # define T_FORK 2
 # define SLEEP 3
 # define THINK 4
 # define DIE	5
 
-
 typedef struct s_phil_c
 {
 	pthread_t		tr_phil;
-	int 			number;
+	int				number;
 	int				eat_counter;
-	uint64_t 		end_eating;
-	pthread_mutex_t *l_fork;
+	uint64_t		end_eating;
+	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	print;
-	unsigned int 	t_t_d;
+	unsigned int	t_t_d;
 	unsigned int	t_t_e;
 	unsigned int	t_t_s;
-	int 			win;
-	uint64_t 		start_time;
+	int				win;
+	uint64_t		start_time;
 
-} 			t_phil_c;
+}			t_phil_c;
 
 typedef struct s_phil
 {
