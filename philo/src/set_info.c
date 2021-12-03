@@ -40,6 +40,7 @@ void	set_info(char *argv[], t_phil *phil_info)
 	phil_info->time_to_die = ft_atoi(argv[2]);
 	phil_info->time_to_eat = ft_atoi(argv[3]);
 	phil_info->time_to_sleep = ft_atoi(argv[4]);
+	//todo protect
 	phil_info->forks = malloc(sizeof(pthread_mutex_t) * phil_info->phil_num);
 	phil_info->phil = malloc(sizeof(t_phil_c) * phil_info->phil_num);
 	if (argv[5])

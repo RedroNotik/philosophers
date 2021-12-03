@@ -2,12 +2,13 @@ NAME = philo
 
 FLAGS =   -I./includes -Wall -Wextra -Werror
 
-LIST = ./src/main.c ./src/utils.c ./src/time.c ./src/set_info.c ./src/simulation.c
+LIST = ./src/main.c ./src/utils.c ./src/time.c ./src/init.c \
+
 
 OBJ	= $(patsubst %.c,%.o,$(LIST))
 
 all :
-	make $(NAME)
+	@make $(NAME)
 
 $(NAME) : $(OBJ)
 	@gcc -o $(NAME) $(OBJ)
