@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:54:05 by ghanh             #+#    #+#             */
-/*   Updated: 2021/12/03 18:54:05 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/12/04 18:02:00 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,27 @@ int	init_ph(t_info *ph_info)
 {
 	int	i;
 
-	sem_unlink("death");
+	sem_unlink("action");
 	sem_unlink("forks");
 	sem_unlink("message");
 	sem_unlink("finish");
-	ph_info->death = sem_open("death", O_CREAT | O_EXCL, 0644, 1);
+	ph_info->action = sem_open("action", O_CREAT | O_EXCL, 0644, 1);
 	ph_info->forks = sem_open("forks", O_CREAT | O_EXCL, 0644,
 			  ph_info->phil_num);
 	ph_info->message = sem_open("message", O_CREAT | O_EXCL, 0644, 1);
-	ph_info->finish = sem_open("finish", O_CREAT | O_EXCL, 0644, 1);
+	ph_info->finish = sem_open("finish", O_CREAT | O_EXCL, 0644, 0);
 	ph_info->phil = malloc(sizeof(t_phil_c) * ph_info->phil_num);
 	if (!ph_info->phil)
 		return (printf("Malloc failed\n"));
 	i = 0;
 	while (i < ph_info->phil_num)
 	{
-		ph_info->phil[i].number = i;
+		ph_info->phil[i].number = i + 1;
 		ph_info->phil[i].eat_counter = 0;
 		ph_info->phil[i].info = ph_info;
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	init(t_info *ph_info, int argc, char *argv[])

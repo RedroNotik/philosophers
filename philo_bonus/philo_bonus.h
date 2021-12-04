@@ -6,7 +6,7 @@
 /*   By: ghanh <ghanh@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 17:41:18 by ghanh             #+#    #+#             */
-/*   Updated: 2021/12/03 18:56:07 by ghanh            ###   ########.fr       */
+/*   Updated: 2021/12/04 17:33:21 by ghanh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 # include <semaphore.h> // sem_open, sem_close, sem_post, sem_wait, sem_unlink
 # include <sys/wait.h>
 # include <stdlib.h> //exit
-# include <errno.h>
+
+# include <pthread.h> //pthread_create, pthread_detach, pthread_join
 # include <string.h> // memset
+# include <sys/types.h>
+# include <signal.h> //kill
 
 typedef struct s_phil_c
 {
@@ -37,8 +40,9 @@ typedef struct s_info
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
+	uint64_t		start_time;
 	int				win;
-	sem_t			*death;
+	sem_t			*action;
 	sem_t			*forks;
 	sem_t			*message;
 	sem_t			*finish;
@@ -53,4 +57,6 @@ void	c_usleep(uint64_t time);
 uint64_t	set_time(int i);
 ////init.c
 int	init(t_info *ph_info, int argc, char *argv[]);
+
+void	print_f(t_phil_c *phil, char *str);
 #endif
