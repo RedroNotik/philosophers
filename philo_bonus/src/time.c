@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo_bonus.h"
+#include "../includes/philo_bonus.h"
 
 void	c_usleep(uint64_t time)
 {

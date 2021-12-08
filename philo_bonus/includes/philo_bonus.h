@@ -46,17 +46,23 @@ typedef struct s_info
 	sem_t			*forks;
 	sem_t			*message;
 	sem_t			*finish;
+	sem_t			*num_to_win;
 	t_phil_c		*phil;
 }				t_info;
 
 ////utils.c
-int	ft_atoi(const char *str);
-int	ft_isdigit(int c);
+int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
 ////time.c
-void	c_usleep(uint64_t time);
+void		c_usleep(uint64_t time);
 uint64_t	set_time(int i);
 ////init.c
-int	init(t_info *ph_info, int argc, char *argv[]);
-
-void	print_f(t_phil_c *phil, char *str);
+int			init(t_info *ph_info, int argc, char *argv[]);
+void		print_f(t_phil_c *phil, char *str);
+////process.c
+void		run_process(t_info *ph_info);
+////monitor.c
+void		*monitor(void *phil);
+void		*eat_monitor(void *inf);
+void		*f_monitor(void *inf);
 #endif

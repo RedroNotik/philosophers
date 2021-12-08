@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo_bonus.h"
+#include "philo_bonus.h"
 
 static int	check_arg(int argc, char *argv[])
 {
@@ -49,18 +49,20 @@ static void	parsing_info(t_info *ph_info, int argc, char *argv[])
 
 int	init_ph(t_info *ph_info)
 {
-	int	i;
+	size_t	i;
 
 	sem_unlink("action");
 	sem_unlink("forks");
 	sem_unlink("message");
 	sem_unlink("finish");
+	sem_unlink("num_to_win");
 	ph_info->action = sem_open("action", O_CREAT | O_EXCL, 0644, 1);
 	ph_info->forks = sem_open("forks", O_CREAT | O_EXCL, 0644,
-			  ph_info->phil_num);
+			ph_info->phil_num);
 	ph_info->message = sem_open("message", O_CREAT | O_EXCL, 0644, 1);
 	ph_info->finish = sem_open("finish", O_CREAT | O_EXCL, 0644, 0);
 	ph_info->phil = malloc(sizeof(t_phil_c) * ph_info->phil_num);
+	ph_info->num_to_win = sem_open("num_to_win", O_CREAT | O_EXCL, 0644, 0);
 	if (!ph_info->phil)
 		return (printf("Malloc failed\n"));
 	i = 0;

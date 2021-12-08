@@ -31,7 +31,7 @@ void	set_phil(t_phil *phil_info, size_t i, char *argv[])
 		phil_info->phil[i].win = -1;
 }
 
-void	set_info(char *argv[], t_phil *phil_info)
+int	set_info(char *argv[], t_phil *phil_info)
 {
 	size_t	i;
 
@@ -40,9 +40,10 @@ void	set_info(char *argv[], t_phil *phil_info)
 	phil_info->time_to_die = ft_atoi(argv[2]);
 	phil_info->time_to_eat = ft_atoi(argv[3]);
 	phil_info->time_to_sleep = ft_atoi(argv[4]);
-	//todo protect
 	phil_info->forks = malloc(sizeof(pthread_mutex_t) * phil_info->phil_num);
 	phil_info->phil = malloc(sizeof(t_phil_c) * phil_info->phil_num);
+	if (!phil_info->forks || !phil_info->phil)
+		return (0);
 	if (argv[5])
 		phil_info->win = ft_atoi(argv[5]);
 	else
@@ -53,4 +54,5 @@ void	set_info(char *argv[], t_phil *phil_info)
 		set_phil(phil_info, i, argv);
 		i++;
 	}
+	return (1);
 }

@@ -100,7 +100,11 @@ int	main(int argc, char *argv[])
 		printf("Incorrect arguments\n");
 		return (0);
 	}
-	set_info(argv, &phil_info);
+	if (!set_info(argv, &phil_info))
+	{
+		printf("Malloc error\n");
+		return (0);
+	}
 	phil_game(&phil_info);
 	free(phil_info.forks);
 	free(phil_info.phil);

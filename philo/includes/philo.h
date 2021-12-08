@@ -56,7 +56,7 @@ typedef struct s_phil
 }				t_phil;
 
 ////set_info.c
-void		set_info(char *argv[], t_phil *phil_info);
+int			set_info(char *argv[], t_phil *phil_info);
 
 ////main.c
 int			die(t_phil *phil_info);

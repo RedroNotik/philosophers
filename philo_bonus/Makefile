@@ -3,6 +3,7 @@ NAME = philo
 FLAGS =   -I./includes -Wall -Wextra -Werror
 
 LIST = ./src/main.c ./src/utils.c ./src/time.c ./src/init.c \
+		./src/process.c ./src/monitor.c
 
 
 OBJ	= $(patsubst %.c,%.o,$(LIST))
