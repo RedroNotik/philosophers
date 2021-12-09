@@ -7,7 +7,7 @@ LIST = ./src/main.c ./src/utils.c ./src/time.c ./src/set_info.c ./src/simulation
 OBJ	= $(patsubst %.c,%.o,$(LIST))
 
 all :
-	make $(NAME)
+	@make $(NAME)
 
 $(NAME) : $(OBJ)
 	@gcc -o $(NAME) $(OBJ)
